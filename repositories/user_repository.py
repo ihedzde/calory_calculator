@@ -1,27 +1,26 @@
-import sqlite3
+from sqlalchemy.orm import sessionmaker
 
 from models.user_model import User
+
+
 class UserRepository:
-    # def __init__(self):
-    #    try:
-    #        self.conn = sqlite3.connect('fitness.db')
-    #    except sqlite3.Error as e:
-    #         raise e
-    # def __del__(self):
-    #     self.conn.close()
-
-    def get_all_user(self):
-         pass
+    def __init__(self, database):
+        self.session = database.session()
+        database.create_db_tables()
+    def get_all_users(self):
+        return self.session.query(User).all()
     def get_user_by_id(self, id):
-        pass
-    def autheticate_user(self, user):
-        pass
-    def update_user(self, id, password):
-        pass
-    def delete_user(self, id):
-        pass
+        for user in self.session.query(User):
+            if user.id == id:
+                return user
+        return None
+    def safe_update_changes(self):
+        self.session.commit()
 
-    def create_user(self, name, password, physical_stats_id):
-        if name in self.get_all_user():
-            raise Exception("The user with that name is already exist")
-        pass
+    def delete_user(self, user):
+        self.session.delete(user)
+        self.safe_update_changes()
+
+    def create_user(self, user):
+        self.session.add(user)
+        self.safe_update_changes()

@@ -15,16 +15,18 @@ class Database:
         SQLITE: 'sqlite:///{DB}'
     }
     db_engine = None
+    def create_db_tables(self):
+        Base.metadata.create_all(self.db_engine)
     def __init__(self, dbtype, username='', password='', dbname=''):
         dbtype = dbtype.lower()
         if dbtype in self.DB_ENGINE.keys():
             engine_url = self.DB_ENGINE[dbtype].format(DB=dbname)
             self.db_engine = create_engine(engine_url, echo = True)#TODO remove echo in production
+            self.session = sessionmaker(bind = self.db_engine)
             print(self.db_engine)
+            self.create_db_tables()
         else:
             print("DBType is not found in DB_ENGINE.")
-    def create_db_tables(self):
-        Base.metadata.create_all(self.db_engine)
 
     # def create_db_tables(self):
     #     metadata = MetaData()
