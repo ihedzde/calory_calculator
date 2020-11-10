@@ -1,3 +1,5 @@
+import sqlite3
 
 class PhysicalStatsRepository:
-    pass
+    def __init__(self):
+        pass
