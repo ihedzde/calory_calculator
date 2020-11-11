@@ -11,9 +11,9 @@ class PhysicalStatsRepository:
         return self.session.query(PhysicalStats).all()
 
     def get_physical_stats_by_id(self, id):
-        for food in self.session.query(PhysicalStats):
-            if food.id == id:
-                return food
+        for stats in self.session.query(PhysicalStats):
+            if stats.id == id:
+                return stats
         return None
 
     def safe_update_changes(self):

@@ -4,7 +4,8 @@ from database.database import Database
 from repositories.physical_stats_repository import PhysicalStatsRepository
 from repositories.product_repository import ProductRepository
 from repositories.user_repository import UserRepository
-from services.authentication_service import AuthenticationService
+from services.physical_stats_service import PhysicalStatsService
+from services.user_service import UserService
 
 
 class Configs(containers.DeclarativeContainer):
@@ -19,8 +20,12 @@ class Databases(containers.DeclarativeContainer):
 
 class Repositories(containers.DeclarativeContainer):
     user_repo = providers.Singleton(UserRepository, database=Databases.database)
-    physical_stats = providers.Singleton(PhysicalStatsRepository, database=Databases.database)
+    physical_stats_repo = providers.Singleton(PhysicalStatsRepository, database=Databases.database)
     product_repo = providers.Singleton(ProductRepository, database = Databases.database)
 
 class Services(containers.DeclarativeContainer):
-    authentication_service = providers.Singleton(AuthenticationService, Repositories.user_repo)
+    user_service = providers.Singleton(UserService, Repositories.user_repo)
+    physical_stats_service = providers.Singleton(PhysicalStatsService,
+                                                 Repositories.physical_stats_repo,
+                                                 Repositories.user_repo
+                                                 )

@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Integer, ForeignKey, Float, String
 
 from database.database import Base
-from models.user_model import User
 
 
 class PhysicalStats(Base):
+    __tablename__ = "physical_stats"
     id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     weight = Column(Float)

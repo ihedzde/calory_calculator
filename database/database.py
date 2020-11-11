@@ -26,7 +26,7 @@ class Database:
             print(self.db_engine)
             self.create_db_tables()
         else:
-            print("DBType is not found in DB_ENGINE.")
+            raise Exception("DBType is not found in DB_ENGINE.")
 
     # def create_db_tables(self):
     #     metadata = MetaData()
