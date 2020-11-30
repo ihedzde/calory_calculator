@@ -11,6 +11,12 @@ class PhysicalStatsService:
     def get_user_info(self, physical_stats):
         return self.user_repo.get_user_by_id(physical_stats.user_id)
 
+    def get_physical_stats_by_user_id(self, user_id):
+        stats = next(
+            filter(lambda stat: stat.user_id == user_id, self.physical_stats_repo.get_all_physical_stats()), None)
+
+        return stats
+
     def delete_physical_stats(self, id):
         physical_stats = self.physical_stats_repo.get_physical_stats_by_id(id)
         self.physical_stats_repo.delete_physical_stats(physical_stats)

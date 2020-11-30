@@ -5,6 +5,7 @@ from repositories.physical_stats_repository import PhysicalStatsRepository
 from repositories.product_repository import ProductRepository
 from repositories.user_repository import UserRepository
 from services.physical_stats_service import PhysicalStatsService
+from services.product_service import ProductService
 from services.user_service import UserService
 
 
@@ -29,3 +30,4 @@ class Services(containers.DeclarativeContainer):
                                                  Repositories.physical_stats_repo,
                                                  Repositories.user_repo
                                                  )
+    product_service = providers.Singleton(ProductService,Repositories.product_repo)
