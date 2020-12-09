@@ -26,4 +26,4 @@ class PhysicalStatsService:
             raise Exception("For that user physical stats already exists.")
         self.physical_stats_repo.create_physical_stats(physical_stats)
     def update_physical_stats(self):
-        self.physical_stats_repo.save_update_changes()
+        self.physical_stats_repo.safe_update_changes()

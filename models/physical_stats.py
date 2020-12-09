@@ -17,6 +17,7 @@ class PhysicalStats(Base):
     def bmr(self):
         if self.gender == "male":
             return 88.362 + (13.397*self.weight) + (4.799 * self.height) + (5.677 * self.age)
-        if self.gender == "female":
+        elif self.gender == "female":
             return 447.593 + (9.247*self.weight) + (3.097 * self.height) + (4.33 * self.age)
-    
+        else:
+            return 0

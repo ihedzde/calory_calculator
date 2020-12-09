@@ -19,7 +19,6 @@ class TestProductRepository(TestCase):
         productA = Product(name="Vegan donat with meat", carb = 51, fat = 25, protein= 4.9)
         # Act
         self.repo.create_product(productA)
-        print("With a unique login", productA)
         # Assert
         # Should be not None as id was assigned by Database
         assert productA.id is not None

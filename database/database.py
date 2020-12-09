@@ -14,6 +14,7 @@ class Database:
     DB_ENGINE={
         SQLITE: 'sqlite:///{DB}'
     }
+
     db_engine = None
     def create_db_tables(self):
         Base.metadata.create_all(self.db_engine)
@@ -21,7 +22,7 @@ class Database:
         dbtype = dbtype.lower()
         if dbtype in self.DB_ENGINE.keys():
             engine_url = self.DB_ENGINE[dbtype].format(DB=dbname)
-            self.db_engine = create_engine(engine_url, echo = True)#TODO remove echo in production
+            self.db_engine = create_engine(engine_url)#TODO remove echo in production
             self.session = sessionmaker(bind = self.db_engine)
             print(self.db_engine)
             self.create_db_tables()
