@@ -31,8 +31,32 @@ class MainWindow:
         self.input_product()
     def print_products(self):
         self.catalog = Canvas(self.page2)
-        for product in self.product_service.get_all_product():
-                Button(self.page2, text= product.name).pack()
+        Label(self.page2, text="Name").grid(row=0, column = 0)
+        Label(self.page2, text="Carbs").grid(row=0, column = 1)
+        Label(self.page2, text="Protein").grid(row=0, column = 2)
+        Label(self.page2, text="Fats").grid(row=0, column = 3)
+        Label(self.page2, text="Delete").grid(row=0, column = 4)
+        products = self.product_service.get_all_product()
+        for i, product in enumerate(products):
+                Label(self.page2, text= product.name).grid(row=i+1, column = 0)
+                Label(self.page2, text= round(product.carb,2)).grid(row=i+1, column = 1)
+                Label(self.page2, text= round(product.protein)).grid(row=i+1, column = 2)
+                Label(self.page2, text= round(product.fat)).grid(row=i+1, column = 3)
+                Button(self.page2, text= "❌").grid(row=i+1, column = 4)
+        last_row = len(products)+1
+        product_name = Entry(self.page2)
+        product_name.grid(row=last_row, column=0)
+        carbs = Entry(self.page2)
+        carbs.grid(row=last_row, column=1)
+        proteins = Entry(self.page2)
+        proteins.grid(row=last_row, column=2)
+        fats = Entry(self.page2)
+        fats.grid(row=last_row, column=3)
+        Button(self.page2, text="+", command=lambda: self.create_product(product_name.get(),
+                                                                         carbs.get(),
+                                                                         proteins.get(),
+                                                                         fats.get())).grid(row=last_row, column=4)
+
     def input_product(self):
         page = self.page2
         # Button(page, text="Create Product.", command=self.create_product()).pack()
@@ -49,14 +73,16 @@ class MainWindow:
         #     Label(page, "Fats").pack()
         #     self.fats = Entry(page)
         #     self.fats.pack()
-    def create_product(self):
+    def create_product(self, product_name, carbs, proteins, fats):
         product = Product(
-            # name = self.product_name.get(),
-            # carb = self.carbs.get(),
-            # protein = self.proteins.get(),
-            # fat = self.fats.get()
+            name = product_name,
+            carb = carbs,
+            protein = proteins,
+            fat = fats
             )
         self.product_service.create_new_product(product)
+        self.clear_page(self.page2)
+        self.print_products()
 
     def update_product(self, product_id):
         product = self.product_service.get_product_by_id(product_id)
