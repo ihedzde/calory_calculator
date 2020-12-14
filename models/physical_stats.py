@@ -12,6 +12,7 @@ class PhysicalStats(Base):
     age = Column(Integer)
     gender = Column(String)
     level_of_activity = Column(String)
+    goal = Column(String)
     def bmi(self):
         return self.weight/(self.height/100)**2
     def bmr(self):

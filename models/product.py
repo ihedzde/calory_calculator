@@ -19,4 +19,4 @@ class Product(Base):
         return {'carbs': weight*self.carb*4, 'fats': weight*self.fat*9, 'proteins':weight*self.protein*4}
 
     def count_calories(self, weight):
-        return weight * (self.protein * 4 + self.fat * 9 + self.carb * 4)
+        return weight * (self.protein / 100 * 4 + self.fat/100 * 9 + self.carb/100 * 4)
